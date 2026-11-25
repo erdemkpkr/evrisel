@@ -470,18 +470,27 @@ function drawEarn(c){
   const g=r=>((+r.parcel||0)+(+r.collection||0))*(+r.rate||0),t=c.today,day=(s,n)=>ds(new Date(pd(s).getFullYear(),pd(s).getMonth(),pd(s).getDate()+n));
   const from28=day(t,-27),last28=recs.filter(r=>r.date>=from28&&r.date<=t),sum28=last28.reduce((a,r)=>a+g(r),0),perDay=sum28/28,worked=new Set(last28.filter(r=>g(r)>0).map(r=>r.date)).size;
   const evMonth=perDay*30.44,EP=evriPeriod(t),soFar=recs.filter(r=>r.date>=EP.start&&r.date<=t).reduce((a,r)=>a+g(r),0),remDays=Math.max(0,Math.round((pd(EP.end)-pd(t))/864e5)),epEst=soFar+perDay*remDays;
+  // Maaş / Artour (Parcel Service) ödemeleri ayrı bir gelir değil: bir önceki Evri döneminin ödemesi (dönem kapandıktan sonraki ayın 15-20'si).
+  // Bu yüzden aylık gelire eklenmez (çift sayılmasın), "son ödeme / sıradaki ödeme" olarak gösterilir.
   const isl=B.islemler||[],gel=isl.filter(x=>x.kategori==='Gelir'&&x.tutar>0);
-  const sal=gel.filter(x=>/maaş/i.test(x.detay||'')||/maaş/i.test(x.hesap||'')).sort((a,b)=>b.tarih.localeCompare(a.tarih))[0];
-  const salAmt=sal?sal.tutar:0,salThisMonth=sal&&sal.tarih.slice(0,7)===t.slice(0,7);
-  const from30=day(t,-29),gig=gel.filter(x=>x.tarih>=from30&&x.tarih<=t&&!/artour|parcel service|evri/i.test(x.aciklama)&&!/maaş/i.test(x.detay||'')&&!/maaş/i.test(x.hesap||'')).reduce((a,x)=>a+x.tutar,0);
-  const total=evMonth+salAmt+gig,diff=total-c.budget;
+  const isPay=x=>/artour|parcel service|evri/i.test(x.aciklama||'')||/maaş/i.test(x.detay||'')||/maaş/i.test(x.hesap||'');
+  const pays=gel.filter(isPay).sort((a,b)=>b.tarih.localeCompare(a.tarih)),lp=pays[0];
+  const lastPay=lp?pays.filter(x=>Math.abs((pd(lp.tarih)-pd(x.tarih))/864e5)<=7):[],lastSum=lastPay.reduce((a,x)=>a+x.tutar,0);
+  const from30=day(t,-29),gig=gel.filter(x=>x.tarih>=from30&&x.tarih<=t&&!isPay(x)).reduce((a,x)=>a+x.tutar,0);
+  const AY=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],nextMonth=e=>{const d=pd(e);return AY[(d.getMonth()+1)%12]};
+  // Sıradaki ödeme: kapanmış ama henüz ödenmemiş dönem varsa o, yoksa içinde bulunulan dönem
+  const PP=evriPeriod(day(EP.start,-1));
+  const ppPaid=lp&&lp.tarih>PP.end,ppGross=recs.filter(r=>r.date>=PP.start&&r.date<=PP.end).reduce((a,r)=>a+g(r),0);
+  const nxt=!ppPaid&&ppGross>0?{n:PP.n,end:PP.end,amt:ppGross,est:false}:{n:EP.n,end:EP.end,amt:epEst,est:true};
+  const total=evMonth+gig,diff=total-c.budget;
   el.innerHTML='<h2>💰 Tahmini kazanç</h2><div class="grid"><div class="metric"><small>Aylık tahmini gelir</small><b>'+m(total)+'</b></div><div class="metric"><small>Evri&#39;den alacak</small><b>'+(ev.alacak==null?'?':m(ev.alacak))+'</b></div></div>'
    +'<div class="entry row"><div><b>EVRİ kazancı (ayda)</b><div class="muted">Son 28 günde '+m(sum28)+', '+worked+' gün çalışıldı · günde ortalama '+m(perDay)+'</div></div><b>'+m(evMonth)+'</b></div>'
+   +'<div class="entry row"><div><b>Diğer gelirler</b><div class="muted">Evri ödemeleri dışı (Uber vb.) · son 30 gün</div></div><b>'+m(gig)+'</b></div>'
    +'<div class="entry row"><div><b>Evri Dönem '+EP.n+'</b><div class="muted">'+dt(EP.start)+' ile '+dt(EP.end)+' · şu ana kadar '+m(soFar)+(remDays?' · bu hızla dönem sonu':'')+'</div></div><b>'+m(epEst)+'</b></div>'
-   +(sal?'<div class="entry row"><div><b>Maaş</b><div class="muted">'+(salThisMonth?dt(sal.tarih)+' geldi':'Son maaş '+dt(sal.tarih)+', bu ay bekleniyor')+'</div></div><b>'+m(salAmt)+'</b></div>':'')
-   +'<div class="entry row"><div><b>Diğer gelirler</b><div class="muted">Evri ve maaş dışı · son 30 gün</div></div><b>'+m(gig)+'</b></div>'
+   +(lp?'<div class="entry row"><div><b>Son Evri ödemesi</b><div class="muted">'+dt(lp.tarih)+' · '+lastPay.map(x=>h(x.hesap||'')+' '+m(x.tutar)).join(' + ')+' · önceki dönemin ücreti</div></div><b>'+m(lastSum)+'</b></div>':'')
+   +'<div class="entry row"><div><b>Sıradaki Evri ödemesi</b><div class="muted">Dönem '+nxt.n+' · '+(nxt.est?'bitiş ':'bitti, ')+dt(nxt.end)+' · '+nextMonth(nxt.end)+' ayının 15-20\'si arası bekleniyor'+(nxt.est?' · tahmini':'')+'</div></div><b>'+m(nxt.amt)+'</b></div>'
    +(c.budget?'<div class="entry row"><div><b>Aylık bütçeye göre</b><div class="muted">Tahmini gelir '+m(total)+' − harcama bütçesi '+m(c.budget)+'</div></div><b class="'+(diff<0?'warn':'ok')+'">'+(diff>=0?'+':'')+m(diff)+'</b></div>':'')
-   +'<p class="notice">EVRİ tahmini kayıtlardan hesaplanır (brüt, yakıt düşülmeden). Evri ödemeyi dönem bittikten sonra yapar; alacak, kazanılıp henüz alınmamış tutardır.</p>';
+   +'<p class="notice">Aylık gelir = EVRİ kazancı + diğer gelirler. Maaş ve Artour ödemeleri burada ayrıca sayılmaz, çünkü onlar bir önceki Evri döneminin ödemesidir (dönem kapandıktan sonraki ayın 15-20\'si). EVRİ rakamları kayıtlardan, brüt (yakıt düşülmeden).</p>';
 }
 function rowHtml(x){
   const pos=x.tutar>0,meta=dt(x.tarih)+' · '+h(x.hesap||'-')+' · '+h(x.kategori)+(x.detay?' / '+h(x.detay):'')+(x.kaynak==='elle'?' · elle eklendi':'');
