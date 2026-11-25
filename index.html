@@ -19,7 +19,12 @@ button,select,.filebtn{min-height:44px}button:disabled{opacity:.45;cursor:defaul
  .metric{padding:11px}.metric b{font-size:19px}
  table{font-size:13px}th,td{padding:7px 5px}
  #recordForm .row button{flex:1}
-}</style></head><body><header class="top"><h1>📦 EVRİ Takip<span id="who"></span></h1><small>Parsel • Collection • Kazanç • Gider • Ödeme</small><div class="whosel" id="whoSel"></div></header><main class="wrap"><p id="roBar" class="robar hide"></p><nav class="tabs"><button data-tab="home" class="active">Özet</button><button data-tab="periods">Dönemler</button><button data-tab="form" class="w">+ Yeni kayıt</button><button data-tab="history">Kayıtlar</button><button data-tab="memory">🔎 Drop Hafızası</button><button data-tab="months">Aylık özet</button><button data-tab="backup">Yedek</button><button data-tab="guide">❓ Kılavuz</button></nav>
+}.bt .btsub{display:flex;gap:6px;overflow:auto;padding:2px 0 6px}.bt .btsub button{white-space:nowrap;min-height:38px;padding:7px 13px;font-size:14px;border-radius:18px}.bt .btsub button.active{background:#0f6f62;color:#fff}
+.bthero{background:#0f6f62;color:#fff;border-radius:18px;padding:16px 18px;display:grid;gap:4px;margin-top:6px}.bthero small{opacity:.9}.bthero b{font-size:40px;line-height:1.1}.bthero span{font-size:14px;opacity:.92}.bthero.over{background:#b42318}.btbar{height:10px;border-radius:9px;background:#ffffff40;overflow:hidden;display:flex;margin-top:6px}.btbar i{display:block;height:100%;background:#fff}.btbar i.b{background:#ffffff8c}
+.btal{background:#fff4d6;color:#6b4e00;border-radius:12px;padding:10px 12px;margin:10px 0;font-size:14px}.btq{border:2px solid #f5c451}.btcat{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;padding:6px 0}.btcat .bar span{background:#0f6f62}
+.btrow{cursor:pointer}.btedit{background:#f3f6fa;border-radius:12px;padding:10px;margin-top:8px}.btedit .row button{flex:1}.pill.ok{background:#e1f3e7;color:#167a3e}.pill.wn{background:#fdf0dc;color:#b45309}.pill.bad{background:#fde6e3;color:#b42318}
+.bttodo{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #e7edf4}.bttodo input{width:22px;height:22px;flex:none;margin-top:2px}.bttodo.done b{text-decoration:line-through;color:#687b90}.btlast{background:#edf3fb;border-radius:12px;padding:10px 12px;line-height:1.7;font-size:14px}
+</style></head><body><header class="top"><h1>📦 EVRİ Takip<span id="who"></span></h1><small>Parsel • Collection • Kazanç • Gider • Ödeme</small><div class="whosel" id="whoSel"></div></header><main class="wrap"><p id="roBar" class="robar hide"></p><nav class="tabs"><button data-tab="home" class="active">Özet</button><button data-tab="periods">Dönemler</button><button data-tab="form" class="w">+ Yeni kayıt</button><button data-tab="history">Kayıtlar</button><button data-tab="memory">🔎 Drop Hafızası</button><button data-tab="months">Aylık özet</button><button data-tab="butce" class="btonly hide">💷 Bütçe</button><button data-tab="backup">Yedek</button><button data-tab="guide">❓ Kılavuz</button></nav>
 <section id="home"><p id="syncState" class="muted" style="margin:0 4px 8px"></p><div class="card w"><h2>Ekran görüntüsünden ekle</h2><p class="muted">Evri'nin "End of route summary" ekranından okunan metni panodan alır ve kayıt formunu doldurur. Benzin ve masrafı sonra elle yazarsınız.</p><div class="row"><button class="primary" id="quickPaste">Panodan oku</button></div><textarea id="quickText" rows="3" placeholder="Ya da okunan metni buraya yapıştırın" style="width:100%;margin-top:10px;padding:10px;border:1px solid #d5deea;border-radius:10px;font:inherit"></textarea><div class="row" style="margin-top:8px"><button id="quickRun">Metni işle</button></div><p id="quickMsg" class="notice"></p></div><div class="card" id="homePeriodCard"></div><div class="card hide" id="compareCard"></div><div class="card" id="balanceCard"></div><div class="card"><div class="row"><h2>Aylık durum</h2><input type="month" id="homeMonth" style="width:155px"></div><div class="grid" id="homeMetrics"></div></div><div class="card"><h2>Son kayıtlar</h2><div id="recent"></div></div></section>
 <section id="form" class="hide"><div class="card"><h2 id="formTitle">Günlük kayıt</h2><form id="recordForm"><div class="grid"><div class="field"><label>Tarih</label><input required type="date" name="date"></div><div class="field"><label>Depo</label><input name="depo" list="depoOptions" autocomplete="off" placeholder="Depo adını yazın"><datalist id="depoOptions"></datalist><div class="chips" id="depoChips"></div><small id="rateHint" style="color:#64748b">Depo ve tarihe göre otomatik fiyat</small></div><div class="field"><label>Drop</label><input name="drop" placeholder="20 veya 26/27" autocomplete="off"></div><div class="field"><label>Parsel</label><input type="number" min="0" step="1" name="parcel" inputmode="numeric"></div><div class="field"><label>Collection</label><input type="number" min="0" step="1" name="collection" inputmode="numeric"></div><div class="field"><label>Birim fiyat (£)</label><input type="number" min="0" step="0.01" name="rate" value="1" inputmode="decimal"></div><div class="field"><label>Yakıt (£)</label><input type="number" min="0" step="0.01" name="fuel" inputmode="decimal"></div><div class="field"><label>Masraf (£)</label><input type="number" min="0" step="0.01" name="expense" inputmode="decimal"></div><div class="field full"><label>Kolaylık (1–10)</label><input name="ease" type="number" min="1" max="10" step="1" inputmode="numeric" placeholder="10 = çok kolay · 1 = çok zor"><small class="muted">Eski kayıtların puanları olduğu gibi korunur.</small></div><div class="field full"><label>Açıklama / Zorluk nedenleri</label><textarea name="note" placeholder="Örn. park sorunu, farm, apartman, uzun yürüyüş..."></textarea></div></div><div class="preview" id="calc"></div><div class="row" style="margin-top:14px"><button type="button" id="cancel">Vazgeç</button><button class="primary" type="submit">Kaydet</button></div></form></div></section>
 <section id="history" class="hide"><div class="card"><h2>Kayıtlar</h2><div class="grid"><div class="field"><label>Ay</label><input type="month" id="filterMonth"></div><div class="field"><label>Depo / Drop ara</label><input id="search" placeholder="Ara"></div></div><div id="entries"></div></div></section>
@@ -36,8 +41,13 @@ button,select,.filebtn{min-height:44px}button:disabled{opacity:.45;cursor:defaul
 <div class="card"><h2>Evri ekstresini kontrol etme</h2><p>Evri dönem ekstresini (PDF) gönderdiğinde, kayıtlarınızın doğru olup olmadığını sistem kendisi kontrol eder.</p><ol><li>PDF'i telefona veya bilgisayara kaydedin.</li><li><b>Dönemler</b> sekmesinde en üstteki "📄 Evri ekstresini kontrol et" kartından dosyayı seçin.</li><li>Yapay zeka ekstreyi okur (30 ile 90 saniye). Sistem her günü sizin kayıtlarınızla karşılaştırır ve rapor çıkarır.</li></ol><p>Raporda şunlar görünür: sizde olmayan günler, paket sayısı farklı günler, ücreti farklı günler, Evri'de olmayan kayıtlarınız ve kaydedilmemiş ödemeler. Her bölümün altında tek tıkla düzeltme düğmesi vardır; <b>"Hepsini uygula"</b> hepsini birden yapar ve ekstre brütünü kaydeder. Siz basmadan hiçbir kayıt değişmez. Evri'de olmayan kayıtlar otomatik silinmez, onlara siz karar verirsiniz.</p><p class="tip">Raporda sarı "Dikkat" kutusu çıkarsa yapay zeka bir satırı yanlış okumuş olabilir. O durumda farkları PDF ile karşılaştırıp öyle uygulayın.</p></div>
 <div class="card"><h2>Ücretler ve dönemler</h2><p>Kazanç = (teslimat + collection) × ücret. "Carried forward", "Failed" ve "Cannot collect" sayılmaz.</p><div style="overflow-x:auto"><table><tr><th>Durum</th><th>Paket başı</th></tr><tr><td>Hafta içi ve cumartesi</td><td>£1,00</td></tr><tr><td>Pazar</td><td>£1,25</td></tr><tr><td>Corby (tüm droplar), hafta içi ve cumartesi (19/10/2026'dan beri)</td><td>£1,10</td></tr></table></div><p>Bazı depoların ücreti farklıdır (Wellingborough £1,05, Grantham £1,15, Chatteris £1,25). Bu sayfa depo adını yazınca bunları kendisi getirir; bot sadece yukarıdaki tabloyu bilir. Farklı depoda çalıştıysanız ücreti sayfadan kontrol edin.</p><p>Evri 4, 4 ve 5 haftalık dönemlerle öder (örneğin Dönem 9 = 31/10 ile 27/11/2026). Sayfa bugünün dönemini kendisi bulur.</p></div>
 <div class="card"><h2>Sık sorulanlar</h2><ul><li><b>Bot cevap vermiyor:</b> İnterneti kontrol edip <code>yardim</code> yazın. Yine olmazsa Erdem'e haber verin.</li><li><b>"Anahtar hatalı":</b> Yedek sekmesinden anahtarı tekrar yapıştırın, başında ve sonunda boşluk olmasın.</li><li><b>"Buluta ulaşılamadı":</b> İnternet yoksa sayfa son gördüğü kayıtları gösterir, internet gelince kendisi günceller.</li><li><b>Yanlış kayıt:</b> <code>sil</code> son kaydı siler. Daha eskisi için Kayıtlar sekmesinden "Düzenle".</li><li><b>Aynı gün iki tur:</b> Her turun ekranını ayrı gönderin, ikisi de sayılır.</li><li><b>Diğerinin kaydını değiştirebilir miyim?</b> Hayır, herkes sadece kendi kayıtlarını değiştirebilir.</li></ul></div>
+</section><section id="butce" class="hide bt"><div class="btsub" id="btSub"><button data-bt="bugun" class="active">Bugün</button><button data-bt="faturalar">Faturalar</button><button data-bt="hesaplar">Hesaplar</button><button data-bt="yukle">📎 Yükle</button></div><p id="btState" class="muted" style="margin:4px 4px 0"></p>
+<div data-btv="bugun"><div class="bthero" id="btHero"><small>Bugün rahatça harcayabileceğin</small><b id="btDaily">…</b><span id="btDailySub"></span><div class="btbar"><i id="btBarSpent"></i><i id="btBarBills" class="b"></i></div></div><div class="grid" style="margin-top:10px"><div class="metric"><small>Kalan bütçe</small><b id="btRemain"></b></div><div class="metric"><small>Bu dönem harcanan</small><b id="btSpent"></b></div><div class="metric"><small>Ödenecek faturalar</small><b id="btBills"></b></div><div class="metric"><small>Dönem sonuna</small><b id="btDays"></b></div></div><div id="btQuestions"></div><div id="btAlerts"></div><div class="card"><h2>Harcama ekle</h2><div class="grid"><div class="field"><label>Tutar (£)</label><input id="btAmt" inputmode="decimal" placeholder="12,50"></div><div class="field"><label>Kategori</label><select id="btCat"><option value="Evsel|Market">Market</option><option value="Evsel|Ev için yemek siparişi">Yemek siparişi</option><option value="Evsel|Ev ihtiyaçları">Ev ihtiyaçları</option><option value="Sabit Gider|Yakıt">Yakıt</option><option value="Hobisel|Dışarıda yemek">Dışarıda yemek / kafe</option><option value="Hobisel|Kişisel alışveriş">Kişisel alışveriş</option><option value="Hobisel|Oyun">Oyun</option><option value="Sabit Gider|">Sabit gider (diğer)</option><option value="Aile Desteği|">Aile desteği</option></select></div><div class="field"><label>Hesap</label><select id="btAcc"></select></div><div class="field"><label>Tarih</label><input type="date" id="btDate"></div><div class="field full"><label>Ne aldın?</label><input id="btDesc" placeholder="Tesco, kahve..."></div></div><button class="primary" id="btAdd" style="width:100%;margin-top:6px">Ekle</button><p class="notice">Eklediğin harcama hemen rakamlardan düşer. Banka dökümü yüklenince aynı harcama dökümdeki kayıtla birleşir, iki kez sayılmaz.</p></div><div class="card"><h2>Para nereye gitti?</h2><div id="btCats"></div></div><div class="card"><h2>Son işlemler</h2><p class="muted" style="margin-top:-6px">Bir işleme dokunursan kategorisini değiştirebilirsin.</p><div id="btRecent"></div></div></div>
+<div data-btv="faturalar" class="hide"><div class="grid"><div class="metric"><small>Daha ödenecek</small><b id="btFLeft"></b></div><div class="metric"><small>Aylık abonelikler</small><b id="btFSubs"></b></div></div><div class="card"><h2>Yaklaşan ödemeler</h2><div id="btUpcoming"></div></div><div class="card"><h2>Bu dönem ödenenler</h2><div id="btPaid"></div></div></div>
+<div data-btv="hesaplar" class="hide"><div class="card"><h2>Param nerede?</h2><div id="btAccounts"></div></div><div class="card"><h2>Gerçekte ne kadar serbest param var?</h2><div id="btFree"></div></div><div class="card"><h2>Bekleyen konular</h2><div id="btNotes"></div></div><div class="card"><h2>Kredi skoru (Experian)</h2><div id="btScore"></div></div><div class="card"><h2>Yapılacaklar</h2><div id="btTodos"></div><p class="notice">İşaretlediklerin bu telefonda kalır.</p></div></div>
+<div data-btv="yukle" class="hide"><div class="card"><h2>📎 Banka dökümü yükle</h2><p class="muted">Starling, Wise veya Lloyds'tan indirdiğin CSV'yi, PDF'i ya da ekran görüntüsünü seç. Yapay zeka okur, kurallara göre kategoriler, aynı işlemi iki kez eklemez. Emin olamadığı işlemleri sana soru olarak sorar.</p><div id="btLast"></div><div class="row" style="justify-content:flex-start;flex-wrap:wrap;margin-top:10px"><label class="filebtn">📎 Dosya seç<input type="file" id="btFile" accept=".csv,.pdf,.png,.jpg,.jpeg,.webp,text/csv,application/pdf,image/*" hidden></label><span id="btFileName" class="muted"></span></div><div class="field hide" id="btAccPick"><label>Bu döküm hangi hesabın?</label><select id="btUpAcc"></select></div><button class="primary" id="btGo" disabled style="width:100%;margin-top:10px">Yükle ve işle</button><p id="btMsg" class="notice"></p><div id="btResult" class="rep"></div></div></div>
 </section></main>
-<nav id="bnav"><button data-tab="home"><span class="i">🏠</span>Özet</button><button data-tab="periods"><span class="i">📅</span>Dönemler</button><button data-tab="form" class="w plus"><span class="i">+</span>Yeni</button><button data-tab="history"><span class="i">📋</span>Kayıtlar</button><button id="moreBtn" type="button"><span class="i">☰</span>Daha</button></nav>
+<nav id="bnav"><button data-tab="home"><span class="i">🏠</span>Özet</button><button data-tab="periods"><span class="i">📅</span>Dönemler</button><button data-tab="form" class="w plus"><span class="i">+</span>Yeni</button><button data-tab="history"><span class="i">📋</span>Kayıtlar</button><button data-tab="butce" class="btonly hide"><span class="i">💷</span>Bütçe</button><button id="moreBtn" type="button"><span class="i">☰</span>Daha</button></nav>
 <div class="sheet-bg" id="sheetBg"></div><div class="sheet" id="moreSheet"><button data-tab="memory">🔎 Drop Hafızası</button><button data-tab="months">📊 Aylık özet</button><button data-tab="backup">💾 Yedek ve anahtar</button><button data-tab="guide">❓ Kılavuz</button></div>
 <script>
 const initial=[];const key='evri_tracker_blank_v1';let data;
@@ -132,7 +142,7 @@ $('#importCsv').onchange=async e=>{
   save();alert(added+' yeni kayıt eklendi.');
  }catch(err){alert('CSV aktarılamadı: '+err.message)}e.target.value='';
 };
-function tab(t){$$('main section').forEach(s=>s.classList.toggle('hide',s.id!==t));$$('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));const mb=$('#moreBtn');if(mb)mb.classList.toggle('active',['memory','months','backup','guide'].includes(t));closeSheet();try{window.scrollTo({top:0})}catch(e){}render()}
+function tab(t){$$('main section').forEach(s=>s.classList.toggle('hide',s.id!==t));$$('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));const mb=$('#moreBtn');if(mb)mb.classList.toggle('active',['memory','months','backup','guide'].includes(t));closeSheet();try{window.scrollTo({top:0})}catch(e){}render();if(t==='butce'&&window.butceOpen)window.butceOpen()}
 function openSheet(){$('#moreSheet').classList.add('open');$('#sheetBg').classList.add('open')}
 function closeSheet(){const s=$('#moreSheet');if(s){s.classList.remove('open');$('#sheetBg').classList.remove('open')}}
 $('#moreBtn').onclick=()=>{$('#moreSheet').classList.contains('open')?closeSheet():openSheet()};$('#sheetBg').onclick=closeSheet;$$('[data-tab]').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='form')reset();tab(b.dataset.tab)});
@@ -287,7 +297,7 @@ async function pushChanges(){if(!apiKey||!meKisi||readOnly())return;if(syncing){
  if(up.length||del.length||pu.length||pd.length||su.length||sd.length){await api('/api/sync',{method:'POST',body:JSON.stringify({upsert:up,delete:del,payments_upsert:pu,payments_delete:pd,statements_upsert:su,statements_delete:sd})});snap=cur;paySnap=pc;stSnap=sc}}while(dirty);setSync('Bulutla senkron ('+new Date().toLocaleTimeString('en-GB').slice(0,5)+')')}catch(e){setSync(e.message==='auth'?'Anahtar hatalı, Yedek sekmesinden yeniden girin':'Senkron başarısız, bir sonraki kayıtta tekrar denenecek',true)}finally{syncing=false}}
 let pulling=false,pullAgain=false,firstPull=true;
 async function pull(){if(!apiKey)return;if(pulling||syncing){pullAgain=true;return}pulling=true;try{
- const me=await api('/api/me');const prev=meKisi;meKisi=me.kisi;if(Array.isArray(me.kisiler)&&me.kisiler.length)kisiler=me.kisiler;try{localStorage.setItem('evri_kisi',meKisi)}catch(e){}
+ const me=await api('/api/me');const prev=meKisi;meKisi=me.kisi;if(window.butceVis)setTimeout(window.butceVis,0);if(Array.isArray(me.kisiler)&&me.kisiler.length)kisiler=me.kisiler;try{localStorage.setItem('evri_kisi',meKisi)}catch(e){}
  const switched=!!prev&&prev!==meKisi;if(!viewKisi||switched||!kisiler.includes(viewKisi))viewKisi=meKisi;
  if(switched){snap=new Map();paySnap=new Map();stSnap=new Map()}
  const v=viewKisi,q='?kisi='+encodeURIComponent(v),cp=currentPeriod();
@@ -314,4 +324,142 @@ document.querySelector('#setKey').onclick=()=>{if(askKey())pull()};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
 setInterval(()=>{if(!document.hidden)pull()},60000);
 setTimeout(()=>{if(!apiKey)askKey();pull()},300);
+</script><script>
+// ===== Bütçe (yalnızca Erdem). Veri /api/butce'den gelir, sayfada kişisel veri yok. Kurallar: Butcesel/CLAUDE.md =====
+(function(){
+const BUDGET_CATS=['Sabit Gider','Evsel','Hobisel','Aile Desteği','Faiz/Ücret','Borç Ödemesi'];
+const ALL_CATS=[...BUDGET_CATS,'Gelir','Transfer','Geri Alınacak','Bütçe Dışı','İncelenecek'];
+const ACCS=['Starling','Wise','Wise Kumbara','Lloyds (maaş)'];
+const AYLAR=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const fmtM=new Intl.NumberFormat('tr-TR',{style:'currency',currency:'GBP'});
+const m=v=>fmtM.format(v||0);
+const h=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const q=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,'0');
+const ds=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const dt=s=>{if(!s)return '?';const d=pd(s);return d.getDate()+' '+AYLAR[d.getMonth()]};
+const lsg=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
+const lss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let B=lsg('butce_cache',null), view='bugun', editId=null, busy=false, lastUpload=null, upFile=null;
+const isMe=()=>{try{return meKisi==='erdem'}catch(e){return false}};
+
+function vis(){const on=isMe();document.querySelectorAll('.btonly').forEach(x=>x.classList.toggle('hide',!on));if(!on&&!q('#butce').classList.contains('hide'))tab('home')}
+async function pull(){if(!isMe())return;try{q('#btState').textContent=B?'':'Yükleniyor…';const d=await api('/api/butce');B=d;lss('butce_cache',d);q('#btState').textContent='';draw()}catch(e){q('#btState').textContent=e.message==='auth'?'Anahtar hatalı.':(B?'Buluta ulaşılamadı, son görülen veriler gösteriliyor.':'Buluta ulaşılamadı.')}}
+async function push(body){q('#btState').textContent='Kaydediliyor…';try{await api('/api/butce/sync',{method:'POST',body:JSON.stringify(body)});q('#btState').textContent='';lss('butce_cache',B)}catch(e){q('#btState').textContent='Kaydedilemedi, internet gelince tekrar dene.'}}
+
+function period(today){const t=pd(today);let s=new Date(t.getFullYear(),t.getMonth(),15);if(t.getDate()<15)s=new Date(t.getFullYear(),t.getMonth()-1,15);const e=new Date(s.getFullYear(),s.getMonth()+1,14);return{start:ds(s),end:ds(e)}}
+function billDue(b,P){if(!b.gun)return null;const s=pd(P.start);const d=b.gun>=15?new Date(s.getFullYear(),s.getMonth(),b.gun):new Date(s.getFullYear(),s.getMonth()+1,b.gun);return ds(d)}
+function billPaid(b,tx){if(b.zarf||!b.eslesme)return null;const keys=String(b.eslesme).split('|').map(x=>x.trim().toLowerCase()).filter(Boolean);const c=tx.filter(x=>x.tutar<0&&keys.some(k=>String(x.aciklama).toLowerCase().includes(k))&&(!b.tolerans||Math.abs(Math.abs(x.tutar)-b.tutar)<=b.tolerans));c.sort((a,z)=>Math.abs(Math.abs(a.tutar)-b.tutar)-Math.abs(Math.abs(z.tutar)-b.tutar));return c[0]||null}
+function compute(){
+  const today=ds(new Date()),P=period(today),A=B.ayarlar||{},isl=B.islemler||[];
+  const tx=isl.filter(x=>x.tarih>=P.start&&x.tarih<=P.end);
+  const cats={};BUDGET_CATS.forEach(k=>cats[k]=0);tx.forEach(x=>{if(BUDGET_CATS.includes(x.kategori))cats[x.kategori]+=-x.tutar});
+  const spent=Object.values(cats).reduce((a,b)=>a+b,0);
+  const bills=(B.faturalar||[]).map(b=>{const o={...b,due:billDue(b,P)};if(b.zarf){o.used=Math.max(0,-tx.filter(x=>/^yakıt/i.test(x.detay||'')).reduce((a,x)=>a+x.tutar,0));o.left=Math.max(0,b.tutar-o.used);o.paid=false}else{o.match=billPaid(b,tx);o.paid=!!o.match}return o});
+  const billsLeft=bills.filter(b=>b.butceye_dahil&&!b.paid&&b.tutar>0).reduce((a,b)=>a+(b.zarf?b.left:b.tutar),0);
+  const budget=Number(A.aylik_harcama_butcesi)||3000,remain=budget-spent-billsLeft;
+  const daysLeft=Math.max(0,Math.round((pd(P.end)-pd(today))/864e5)+1);
+  const basla=A.kayit_baslangici||'2026-10-15',open=A.acilis_bakiyeleri_14_10_2026||{};
+  const accs=ACCS.map(n=>{const its=isl.filter(x=>x.hesap===n&&x.tarih>=basla);const v=(open[n]||0)+its.reduce((a,x)=>a+x.tutar,0);const last=its.reduce((mx,x)=>x.tarih>mx?x.tarih:mx,'');return{n,v:Math.round(v*100)/100,last}});
+  const total=accs.reduce((a,x)=>a+x.v,0);
+  const geri=isl.filter(x=>x.kategori==='Geri Alınacak').reduce((a,x)=>a+x.tutar,0);
+  const sorular=isl.filter(x=>x.kategori==='İncelenecek');
+  return{today,P,A,tx,cats,spent,bills,billsLeft,budget,remain,daysLeft,accs,total,geri,sorular,free:total-(Number(A.acil_durum_fonu_hedefi)||0)-billsLeft};
+}
+
+function draw(){
+  if(!B||q('#butce').classList.contains('hide'))return;
+  const c=compute();
+  document.querySelectorAll('[data-btv]').forEach(x=>x.classList.toggle('hide',x.dataset.btv!==view));
+  document.querySelectorAll('#btSub button').forEach(x=>x.classList.toggle('active',x.dataset.bt===view));
+  const sb=q('#btSub [data-bt="bugun"]');sb.textContent=c.sorular.length?'Bugün ('+c.sorular.length+' soru)':'Bugün';
+  // Bugün
+  q('#btHero').classList.toggle('over',c.remain<0);
+  q('#btDaily').textContent=c.daysLeft?m(c.remain/c.daysLeft):'Dönem bitti';
+  q('#btDailySub').textContent=dt(c.P.start)+' ile '+dt(c.P.end)+' arası. '+(c.remain>=0?'Dönem sonuna kadar her gün; market, yemek ve keyfi harcamalar için (yakıt ayrıca ayrıldı).':'Bütçe aşıldı, bu dönem sadece zorunlu harcama.');
+  const sp=Math.min(100,c.spent/c.budget*100),bl=Math.max(0,Math.min(100-sp,c.billsLeft/c.budget*100));q('#btBarSpent').style.width=sp+'%';q('#btBarBills').style.width=bl+'%';
+  q('#btRemain').textContent=m(c.remain);q('#btRemain').className=c.remain<0?'warn':'';q('#btSpent').textContent=m(c.spent);q('#btBills').textContent=m(c.billsLeft);q('#btDays').textContent=c.daysLeft+' gün';
+  q('#btQuestions').innerHTML=c.sorular.length?'<div class="card btq"><h2>❓ Sorular ('+c.sorular.length+')</h2><p class="muted" style="margin-top:-6px">Bu işlemlerden emin olamadım. Doğru olana dokun.</p>'+c.sorular.map(x=>{const opts=(x.soru&&x.soru.options||[]).filter(o=>o&&o.kategori);return '<div class="entry"><b>'+h(x.soru&&x.soru.q||x.aciklama)+'</b><div class="muted">'+dt(x.tarih)+' · '+h(x.hesap)+' · '+h(x.aciklama)+' · '+m(x.tutar)+'</div><div class="chips">'+opts.map((o,i)=>'<button data-btans="'+x.id+'" data-i="'+i+'">'+h(o.detay?o.detay+' ('+o.kategori+')':o.kategori)+'</button>').join('')+'<button data-btedit="'+x.id+'">Başka…</button></div></div>'}).join('')+'</div>':'';
+  const al=[],t=c.today;
+  const soon=c.bills.filter(b=>!b.paid&&!b.zarf&&b.due&&b.due>=t&&(pd(b.due)-pd(t))/864e5<=3);
+  if(soon.length)al.push('<div class="btal">⏰ <b>Yakında ödenecek:</b> '+soon.map(b=>h(b.fatura)+' '+m(b.tutar)+' ('+dt(b.due)+')').join(', ')+'</div>');
+  if(c.geri<-0.01)al.push('<div class="btal">👪 <b>Aileden alacak:</b> '+m(-c.geri)+' (Geri Alınacak ödemeler henüz kapanmadı)</div>');
+  q('#btAlerts').innerHTML=al.join('');
+  const ent=Object.entries(c.cats).sort((a,b)=>b[1]-a[1]),mx=Math.max(1,...ent.map(e=>e[1]));
+  q('#btCats').innerHTML=ent.map(([k,v])=>'<div class="btcat"><span>'+h(k)+'</span><div class="bar"><span style="width:'+Math.max(0,v/mx*100)+'%"></span></div><b>'+m(v)+'</b></div>').join('');
+  const rec=[...(B.islemler||[])].sort((a,b)=>b.tarih.localeCompare(a.tarih)||b.id-a.id).slice(0,20);
+  q('#btRecent').innerHTML=rec.map(x=>rowHtml(x)).join('')||'<p class="muted">İşlem yok.</p>';
+  // Faturalar
+  q('#btFLeft').textContent=m(c.billsLeft);q('#btFSubs').textContent=m(c.bills.filter(b=>b.abonelik).reduce((a,b)=>a+b.tutar,0));
+  const un=c.bills.filter(b=>!b.paid).sort((a,b)=>(a.due||'9')>(b.due||'9')?1:-1);
+  q('#btUpcoming').innerHTML=un.map(b=>{if(b.zarf)return '<div class="entry row"><div><b>'+h(b.fatura)+'</b><div class="muted">'+m(b.used)+' harcandı · her dönem baştan ayrılır, benzin aldıkça düşer</div></div><div style="text-align:right"><b>'+m(b.left)+'</b><div class="muted">kaldı</div></div></div>';let pill='<span class="pill">Tarih yok</span>';if(b.due){const dd=Math.round((pd(b.due)-pd(t))/864e5);pill=dd<0?'<span class="pill bad">Gecikti?</span>':dd<=3?'<span class="pill wn">'+(dd?dd+' gün':'Bugün')+'</span>':'<span class="pill">'+dd+' gün</span>'}if(!b.tutar)pill='<span class="pill">Tutar belli değil</span>';return '<div class="entry row"><div><b>'+h(b.fatura)+'</b><div class="muted">'+(b.due?dt(b.due):'?')+(b.note?' · '+h(b.note):'')+(!b.butceye_dahil?' · bütçeden düşmez':'')+'</div></div><div style="text-align:right"><b>'+m(b.tutar)+'</b><div>'+pill+'</div></div></div>'}).join('')||'<p class="muted">Bu dönem ödenecek fatura kalmadı.</p>';
+  q('#btPaid').innerHTML=c.bills.filter(b=>b.paid).map(b=>'<div class="entry row"><div><b>'+h(b.fatura)+'</b><div class="muted">'+dt(b.match.tarih)+' · '+h(b.match.aciklama)+'</div></div><div style="text-align:right"><b>'+m(-b.match.tutar)+'</b><div><span class="pill ok">Ödendi</span></div></div></div>').join('')||'<p class="muted">Henüz yok.</p>';
+  // Hesaplar
+  const sdb=c.A.son_dogrulanan_bakiyeler||{};
+  q('#btAccounts').innerHTML=c.accs.map(a=>{const v=sdb[a.n];let note=a.last?'Son işlem '+dt(a.last):'İşlem yok';if(v!=null&&sdb.tarih){const at=(c.A.acilis_bakiyeleri_14_10_2026||{})[a.n]||0;const calc=Math.round((at+(B.islemler||[]).filter(x=>x.hesap===a.n&&x.tarih>=(c.A.kayit_baslangici||'2026-10-15')&&x.tarih<=sdb.tarih).reduce((s,x)=>s+x.tutar,0))*100)/100;note+=Math.abs(calc-v)<0.01?' · '+dt(sdb.tarih)+' banka bakiyesiyle tutuyor ✓':' · <span class="warn">'+dt(sdb.tarih)+' bankada '+m(v)+', hesaplanan '+m(calc)+' (eksik işlem olabilir)</span>'}return '<div class="entry row"><div><b>'+h(a.n)+'</b><div class="muted">'+note+'</div></div><b>'+m(a.v)+'</b></div>'}).join('')+'<div class="entry row"><div><b>Toplam</b><div class="muted">Amex hariç (ailenin sorumluluğunda)</div></div><b>'+m(c.total)+'</b></div>';
+  const em=Number(c.A.acil_durum_fonu_hedefi)||0;
+  q('#btFree').innerHTML='<div class="entry row"><span>Hesaplardaki toplam</span><b>'+m(c.total)+'</b></div><div class="entry row"><span>Acil durum fonu (hedef)</span><b>'+m(-em)+'</b></div><div class="entry row"><span>Bu dönem ödenecek faturalar</span><b>'+m(-c.billsLeft)+'</b></div><div class="entry row"><b>Serbest para</b><b class="'+(c.free<0?'warn':'ok')+'">'+m(c.free)+'</b></div><p class="notice">Acil durum fonu hedef olarak düşülüyor. Kumbara\'da '+m((c.accs.find(a=>a.n==='Wise Kumbara')||{}).v)+' var.</p>';
+  q('#btNotes').innerHTML=(c.A.notlar||[]).map(([n,t])=>'<div class="entry"><b>'+h(n)+'</b><div class="muted">'+h(t)+'</div></div>').join('')||'<p class="muted">Yok.</p>';
+  const sk=c.A.kredi_skoru_experian||[],last=sk[sk.length-1],prev=sk[sk.length-2],amex=c.A.amex||{};
+  q('#btScore').innerHTML=last?'<div class="row"><div><b style="font-size:34px">'+last.skor+'</b> <span class="pill">'+(last.skor>=961?'Mükemmel':last.skor>=881?'İyi':last.skor>=721?'Orta':'Zayıf')+'</span></div><div class="muted" style="text-align:right">'+(prev?(last.skor-prev.skor)+' puan (önceki '+prev.skor+')':'')+'<br>"İyi" banda '+Math.max(0,881-last.skor)+' puan</div></div><div class="muted" style="margin-top:6px">'+sk.map(x=>x.ay.slice(5)+'/'+x.ay.slice(2,4)+': '+x.skor).join(' · ')+'</div>'+(amex.limit?'<div class="entry row" style="margin-top:6px"><div><b>Amex kullanımı</b><div class="muted">Ödeme ailende ama kart senin adına. %25 altı iyi, %10 altı ideal.</div></div><b>'+m(amex.borc)+' · %'+Math.round(amex.borc/amex.limit*100)+'</b></div>':''):'<p class="muted">Kayıt yok.</p>';
+  const done=lsg('butce_todos',{});
+  q('#btTodos').innerHTML=(c.A.yapilacaklar||[]).map(([id,t,s])=>'<label class="bttodo'+(done[id]?' done':'')+'"><input type="checkbox" data-bttodo="'+h(id)+'"'+(done[id]?' checked':'')+'><span><b>'+h(t)+'</b><br><small class="muted">'+h(s)+'</small></span></label>').join('');
+  // Yükle
+  q('#btLast').innerHTML='<div class="btlast">'+c.accs.filter(a=>a.n!=='Wise Kumbara').map(a=>'<div><b>'+h(a.n)+':</b> son işlem '+(a.last?dt(a.last)+'. <b>'+dt(a.last)+'\'dan itibaren indir.</b>':'yok.')+'</div>').join('')+'<div class="muted">Aynı günü tekrar indirmek sorun değil, tekrar eden işlemler ayıklanır. Kumbara hareketleri ana Wise dökümünde görünmez; Kumbara için ekran görüntüsü at.</div></div>'+(B.son_yukleme?'<p class="muted">Son yükleme: '+dt(B.son_yukleme.tarih.slice(0,10))+', '+h(B.son_yukleme.hesap)+', '+B.son_yukleme.eklenen+' yeni işlem.</p>':'');
+}
+function rowHtml(x){
+  const pos=x.tutar>0,meta=dt(x.tarih)+' · '+h(x.hesap||'-')+' · '+h(x.kategori)+(x.detay?' / '+h(x.detay):'')+(x.kaynak==='elle'?' · elle eklendi':'');
+  let s='<div class="entry btrow" data-btrow="'+x.id+'"><div class="row"><div style="min-width:0"><b style="overflow-wrap:anywhere">'+h(x.aciklama)+'</b><div class="muted">'+meta+'</div></div><b class="'+(pos?'ok':'')+'" style="white-space:nowrap">'+(pos?'+':'')+m(x.tutar)+'</b></div>';
+  if(editId===x.id)s+='<div class="btedit"><div class="grid"><div class="field"><label>Kategori</label><select id="btEdCat">'+ALL_CATS.map(k=>'<option'+(k===x.kategori?' selected':'')+'>'+k+'</option>').join('')+'</select></div><div class="field"><label>Detay</label><input id="btEdDet" value="'+h(x.detay)+'"></div><div class="field full"><label>Not</label><input id="btEdNote" value="'+h(x.note)+'"></div></div><div class="row"><button class="danger" data-btdel="'+x.id+'">Sil</button><button data-btcancel="1">Vazgeç</button><button class="primary" data-btsave="'+x.id+'">Kaydet</button></div></div>';
+  return s+'</div>';
+}
+function setIslem(x){const i=B.islemler.findIndex(y=>y.id===x.id);if(i>=0)B.islemler[i]=x;else B.islemler.push(x)}
+
+document.addEventListener('click',async e=>{
+  const sub=e.target.closest('#btSub button');if(sub){view=sub.dataset.bt;editId=null;draw();return}
+  if(!B)return;
+  const ans=e.target.closest('[data-btans]');if(ans){const x=B.islemler.find(y=>y.id===Number(ans.dataset.btans));const o=x&&x.soru&&x.soru.options[Number(ans.dataset.i)];if(!o)return;const nx={...x,kategori:o.kategori,detay:o.detay||x.detay,soru:null};setIslem(nx);draw();push({islem_upsert:[nx]});return}
+  const ed=e.target.closest('[data-btedit]');if(ed){editId=Number(ed.dataset.btedit);view='bugun';draw();const r=q('[data-btrow="'+editId+'"]');if(!r){const x=B.islemler.find(y=>y.id===editId);q('#btRecent').insertAdjacentHTML('afterbegin',rowHtml(x))}const el=q('[data-btrow="'+editId+'"]');if(el)el.scrollIntoView({block:'center'});return}
+  if(e.target.closest('[data-btcancel]')){editId=null;draw();return}
+  const sv=e.target.closest('[data-btsave]');if(sv){const x=B.islemler.find(y=>y.id===Number(sv.dataset.btsave));const nx={...x,kategori:q('#btEdCat').value,detay:q('#btEdDet').value.trim(),note:q('#btEdNote').value.trim()};if(nx.kategori!=='İncelenecek')nx.soru=null;editId=null;setIslem(nx);draw();push({islem_upsert:[nx]});return}
+  const dl=e.target.closest('[data-btdel]');if(dl){const id=Number(dl.dataset.btdel);if(!confirm('Bu işlem silinsin mi?'))return;B.islemler=B.islemler.filter(y=>y.id!==id);editId=null;draw();push({islem_delete:[id]});return}
+  const row=e.target.closest('[data-btrow]');if(row&&!e.target.closest('.btedit')){const id=Number(row.dataset.btrow);editId=editId===id?null:id;draw();return}
+  if(e.target.closest('#btUndo')){const ids=lastUpload||[];if(!ids.length||!confirm(ids.length+' yeni işlem geri alınsın mı?'))return;B.islemler=B.islemler.filter(y=>!ids.includes(y.id));lastUpload=null;q('#btResult').innerHTML='<div class="box info">Geri alındı.</div>';draw();push({islem_delete:ids});return}
+});
+document.addEventListener('change',e=>{const id=e.target.dataset&&e.target.dataset.bttodo;if(!id)return;const d=lsg('butce_todos',{});d[id]=e.target.checked;lss('butce_todos',d);e.target.closest('.bttodo').classList.toggle('done',e.target.checked)});
+
+function initForm(){
+  q('#btAcc').innerHTML=ACCS.map(a=>'<option'+(a==='Wise'?' selected':'')+'>'+a+'</option>').join('');
+  q('#btUpAcc').innerHTML='<option value="">Seç…</option>'+ACCS.map(a=>'<option>'+a+'</option>').join('');
+  q('#btDate').value=ds(new Date());
+  q('#btAdd').addEventListener('click',()=>{if(!B)return;const a=parseFloat(q('#btAmt').value.replace(/\s/g,'').replace(',','.'));if(!(a>0)){alert('Geçerli bir tutar yaz, örneğin 12,50');return}const[k,d]=q('#btCat').value.split('|');const x={id:Date.now(),tarih:q('#btDate').value||ds(new Date()),hesap:q('#btAcc').value,aciklama:q('#btDesc').value.trim()||d||k,tutar:-Math.round(a*100)/100,kategori:k,detay:d||'',note:'',soru:null,bakiye:null,kaynak:'elle'};B.islemler.push(x);q('#btAmt').value='';q('#btDesc').value='';draw();push({islem_upsert:[x]})});
+  q('#btFile').addEventListener('change',e=>{upFile=e.target.files&&e.target.files[0]||null;q('#btFileName').textContent=upFile?upFile.name+' ('+Math.round(upFile.size/1024)+' KB)':'';q('#btGo').disabled=!upFile;q('#btMsg').textContent='';q('#btResult').innerHTML='';q('#btAccPick').classList.add('hide')});
+  q('#btGo').addEventListener('click',upload);
+}
+function readB64(f){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result));r.onerror=()=>no(new Error('Dosya okunamadı'));r.readAsDataURL(f)})}
+async function upload(){
+  if(!upFile||busy)return;if(upFile.size>10*1024*1024){q('#btMsg').textContent='Dosya çok büyük (en fazla 10 MB).';return}
+  busy=true;q('#btGo').disabled=true;q('#btMsg').textContent='Okunuyor… (yarım dakika kadar sürebilir)';q('#btResult').innerHTML='';
+  try{
+    const data=await readB64(upFile);
+    const r=await fetch(API+'/api/butce/doc',{method:'POST',headers:{'x-api-key':apiKey,'content-type':'application/json'},body:JSON.stringify({data,mime:upFile.type,name:upFile.name,hesap:q('#btUpAcc').value})});
+    const j=await r.json().catch(()=>({error:'Sunucu cevabı okunamadı'}));
+    if(j.hesap_sor){q('#btAccPick').classList.remove('hide');q('#btMsg').textContent=j.error;return}
+    if(!r.ok||!j.ok)throw new Error(j.error||('Hata '+r.status));
+    lastUpload=j.added.map(x=>x.id);q('#btMsg').textContent='';
+    let o='<div class="box good">'+h(j.hesap)+': <b>'+j.eklenen+' yeni işlem</b> eklendi'+(j.tekrar?', '+j.tekrar+' işlem zaten kayıtlıydı':'')+(j.atlanan?', '+j.atlanan+' reddedilen/iptal/0 tutarlı işlem atlandı':'')+(j.guncellenen?', elle eklediğin '+j.guncellenen+' harcama dökümdekiyle birleşti':'')+'.</div>';
+    if(j.bakiye)o+=Math.abs(j.bakiye.fark)<0.01?'<div class="box good">Bakiye tutuyor: bankada '+m(j.bakiye.banka)+(j.bakiye.tarih?' ('+dt(j.bakiye.tarih)+')':'')+' ✓</div>':'<div class="box bad">Bakiye tutmuyor: bankada '+m(j.bakiye.banka)+', hesaplanan '+m(j.bakiye.hesaplanan)+' (fark '+m(j.bakiye.fark)+'). Eksik bir işlem ya da eski bir döküm olabilir. Daha önceki tarihten başlayan bir döküm yükle.</div>';
+    if(j.soru)o+='<div class="box info">'+j.soru+' işlemden emin olamadım. Bugün sekmesindeki sorulara bak.</div>';
+    if(j.added.length)o+='<h3>Eklenenler</h3><table><tr><th>Tarih</th><th>Açıklama</th><th>Kategori</th><th>Tutar</th></tr>'+j.added.map(x=>'<tr><td>'+dt(x.tarih)+'</td><td style="white-space:normal;text-align:left">'+h(x.aciklama)+'</td><td style="white-space:normal">'+h(x.kategori)+(x.detay?' / '+h(x.detay):'')+'</td><td>'+m(x.tutar)+'</td></tr>').join('')+'</table><div class="acts"><button id="btUndo" class="danger">Bu yüklemeyi geri al</button></div>';
+    if(j.skipped&&j.skipped.length)o+='<details><summary class="muted">Atlananlar ('+j.skipped.length+')</summary>'+j.skipped.map(x=>'<div class="muted">'+dt(x.tarih)+' · '+h(x.aciklama)+' · '+m(x.tutar)+'</div>').join('')+'</details>';
+    q('#btResult').innerHTML=o;upFile=null;q('#btFile').value='';q('#btFileName').textContent='';q('#btAccPick').classList.add('hide');
+    await pull();
+  }catch(e){q('#btMsg').textContent='Olmadı: '+(e.message||e)}
+  finally{busy=false;q('#btGo').disabled=!upFile}
+}
+window.butceOpen=()=>{vis();if(!isMe())return;draw();pull()};
+window.butceVis=vis;
+initForm();vis();
+})();
 </script></body></html>
