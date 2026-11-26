@@ -764,7 +764,7 @@ function draw(force){
     +bzY.map(y=>'<div class="isthb"><span>'+y.y+'</span><div class="bar"><span style="width:'+((y.patron+y.fuel)/bzMax*100).toFixed(1)+'%;background:var(--ist-amber)"></span></div><b>'+m0(y.patron+y.fuel)+'</b><small class="muted">'+(y.patron?'kart '+m0(y.patron):'')+(y.patron&&y.fuel?' + ':'')+(y.fuel?'kendi '+m0(y.fuel):'')+'</small></div>').join('')
     +'<p class="notice">Masraflar (sistem): '+m(B.exp)+'. Arşivde benzin listeleri yalnızca Temmuz 2023 ile Ağustos 2024 arası tablolarda var.</p></div>';
   // Arsiv kontrol bulgulari
-  o+='<div class="card"><h2>⚠️ Arşiv kontrol bulguları</h2><div class="grid isttiles">'+tile('Alınmamış (kesin)',m(A.alinmadi),'26/04/2023 £81 + 29/07/2023 £96,70','r')+tile('Kontrol edilen görsel',A.gorsel,'kopyalar ve eski sürümler ayıklandı')+'</div>'
+  o+='<div class="card"><h2>⚠️ Arşiv kontrol bulguları</h2><div class="grid isttiles">'+tile('Alınmamış (kesin)',m(A.alinmadi),(A.kayitlar||[]).filter(k=>/ALINMADI/.test(k[7])).map(k=>k[0].split('-').reverse().join('/')+' '+m(k[5]+k[6])).join(' + '),'r')+tile('Kontrol edilen görsel',A.gorsel,'kopyalar ve eski sürümler ayıklandı')+'</div>'
     +(A.bulgular||[]).map(b=>'<div class="istbul '+(b.onem==='yüksek'?'y':b.onem==='orta'?'o':'d')+'">'+(b.tutar?'<span class="p">'+m(Math.abs(b.tutar))+(b.tutar<0?' lehine':'')+'</span>':'')+'<b>'+h(b.tur)+'</b>'+(b.tarih?' · '+dt(b.tarih):'')+'<div>'+h(b.metin)+'</div></div>').join('')
     +'<p class="notice">Çalışılmayan aralar (senin bilgin): '+(A.calisilmadi||[]).map(c=>dt(c[0])+' ile '+dt(c[1])).join('; ')+'.</p></div>';
   // Arsiv kayitlari
